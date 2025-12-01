@@ -143,7 +143,7 @@
                (:height pmap))
    (keys (:tiles pmap))))
 
-(defn pmap [astr]
+(defn make-pmap [astr]
   (tmap-to-pmap (tmap astr)))
 
 ;; finding cycles in sequences

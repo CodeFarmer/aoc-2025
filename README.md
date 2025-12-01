@@ -8,6 +8,8 @@ better than previous years as Christmas starts to really bite.
 
 $ lein test
 
+$ racket rkt/day-1-test.rkt
+
 ## License
 
 Copyright © 2025 Joel Gluth

@@ -2,10 +2,6 @@
   (:require [aoc-2025.core :refer :all]
             [clojure.string :as str]))
 
-(comment
-  (defn invalid-id? [i]
-    (re-find (re-matcher #"^(\d){2}$" (str i)))))
-
 (defn invalid-id? [i]
   (let [s (str i)
         len (count s)

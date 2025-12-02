@@ -5,9 +5,11 @@
          rackunit
          "day-1.rkt")
 
-(check-equal? -68 (instruction-delta "L68"))
-(check-equal? -30 (instruction-delta "L30"))
-(check-equal?  48 (instruction-delta "R48"))
+(test-case
+    "Individual instruction parsing"
+  (check-equal? -68 (instruction-delta "L68"))
+  (check-equal? -30 (instruction-delta "L30"))
+  (check-equal?  48 (instruction-delta "R48")))
 
 (define sample-data
   (map instruction-delta

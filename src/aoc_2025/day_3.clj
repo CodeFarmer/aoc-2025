@@ -17,6 +17,6 @@
    (joltage n 0 [] astr))
   ([n start acc astr]
    (if (zero? n)
-     (parse-long (apply str (map second acc)))
-     (let [a (find-highest-digit astr start (- (count astr) (dec n)))]
-       (recur (dec n) (inc (first a)) (conj acc a) astr)))))
+     (parse-long (apply str acc))
+     (let [[idx a] (find-highest-digit astr start (- (count astr) (dec n)))]
+       (recur (dec n) (inc idx) (conj acc a) astr)))))

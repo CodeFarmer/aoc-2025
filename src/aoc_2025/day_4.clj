@@ -4,13 +4,13 @@
 
 
 (defn has-fewer-neighbours [n tmap point]
-  (let [neighbours (tmap-find-neighbours-diagonals tmap point)]
-    (< (count (filter #(= \@ (get-tile tmap %)) neighbours))
-       n)))
+  (< (count (filter #(= \@ (get-tile tmap %))
+                    (tmap-find-neighbours-diagonals tmap point)))
+     n))
 
 (defn accessible-rolls [tmap]
-  (let [rolls (tmap-find-locations tmap \@)]
-    (filter (partial has-fewer-neighbours 4 tmap) rolls)))
+  (filter (partial has-fewer-neighbours 4 tmap)
+          (tmap-find-locations tmap \@)))
 
 ;; part 2
 

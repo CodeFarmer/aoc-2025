@@ -50,7 +50,7 @@
 (deftest neighbour-finding-test
   (testing "tile map"
     (is (= [[1 0] [0 1]]
-           (tmap-find-neighbours [0 0] simple-city)))))
+           (tmap-find-neighbours simple-city [0 0])))))
 
 (deftest find-locations-test
   (let [sample-data

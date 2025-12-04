@@ -31,16 +31,28 @@
   (count (first tmap)))
 
 (def neighbour-deltas
-  [[-1 0] [0 -1] [1 0] [0 1]])
+  [       [0 -1]
+   [-1 0]        [1 0]
+          [0  1]])
 
-;; FIXME switch args around
-(defn tmap-find-neighbours [point tmap]
+(def neighbour-deltas-diagonals
+  [[-1 -1] [0 -1] [1 -1]
+   [-1  0]        [1  0]
+   [-1  1] [0  1] [1  1]])
+
+(defn -tmap-find-neighbours [tmap point deltas]
   (let [width (tmap-width tmap)
         height (tmap-height tmap)]
-    (->> neighbour-deltas
+    (->> deltas
          (map #(map + point %))
          (filter (fn [[x y]] (and (>= x 0) (< x width)
                                   (>= y 0) (< y height)))))))
+
+(defn tmap-find-neighbours [tmap point]
+  (-tmap-find-neighbours tmap point neighbour-deltas))
+
+(defn tmap-find-neighbours-diagonals [tmap point]
+  (-tmap-find-neighbours tmap point neighbour-deltas-diagonals))
 
 (defn tmap-rotate-right
   "Given a map expressed as a vector of strings (each a single line of the map), rotate it 90 degrees clockwise"

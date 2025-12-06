@@ -18,11 +18,29 @@
 
 (deftest solve-test
   (is (= 33210 (solve '[* [123 45 6]])))
-  (is (= 490 (solve '[+ [328 64 98]]))))
-
-(deftest sum-solutions-test
+  (is (= 490 (solve '[+ [328 64 98]])))
   (is (= 4277556 (reduce + (map solve (parse sample-string))))))
 
 (def input-string (slurp "aoc-2025-inputs/day-6.txt"))
+
 (deftest part-1-test
   (is (= 4076006202939 (reduce + (map solve (parse input-string))))))
+
+;; part 2
+
+(deftest parse-columns-test
+  (is (= '[[* ["123" " 45" "  6"]]
+           [+ ["328" "64 " "98 "]]
+           [* [" 51" "387" "215"]]
+           [+ ["64 " "23 " "314"]]]
+         (parse-columns sample-string))))
+
+(deftest cephalopod-solve-test
+  (is (= 1058 (cephalopod-solve '[+ ["64 " "23 " "314"]])))
+  (is (= 3253600 (cephalopod-solve '[* [" 51" "387" "215"]])))
+  (is (= 625 (cephalopod-solve '[+ ["328" "64 " "98 "]])))
+  (is (= 8544 (cephalopod-solve '[* ["123" " 45" "  6"]])))
+  (is (= 3263827 (reduce + (map cephalopod-solve (parse-columns sample-string))))))
+
+(deftest part-2-test
+  (is (= 7903168391557 (reduce + (map cephalopod-solve (parse-columns input-string))))))

@@ -15,3 +15,56 @@
 
 (defn solve [[operator operands]]
   (apply (resolve operator) operands))
+
+(comment 
+  ;; pad a sequence of numbers
+  (defn right-pad [aseq]
+    (let [l (count (str (reduce max aseq)))]
+      (map (fn [i]
+             (let [s (str i)]
+               (str s (apply str (repeat (- l (count s)) \space)))))
+           aseq)))
+
+  (defn cephalopod-mangle [aseq]
+    (let [padded (right-pad aseq)]
+      (loop [strings []
+             i (dec (count (first padded)))]
+        (if (= -1 i)
+          (map parse-long strings)
+          (recur (conj strings (str/trim (apply str (map #(.charAt % i) padded))))
+                 (dec i))))))
+
+  (defn cephalopod-solve [[operator operands]]
+    (apply (resolve operator) (cephalopod-mangle operands))))
+
+
+(defn parse-columns
+  ([astr]
+   (let [lines (str/split astr #"\n")
+         operators-line (last lines)
+         numbers-lines (take-while #(not (= operators-line %)) lines)]
+     ;; fairly sure this is criminally bad clojure style
+     (map #(vector (symbol (str/trim %1)) %2)
+          (str/split operators-line #"\s+")
+          (parse-columns 0 [] (repeat (count numbers-lines) "") numbers-lines))))
+  
+  ([idx cols current-col lines]
+   (cond (= idx (count (first lines))) (conj cols current-col)
+         (every? #(= \space (nth % idx)) lines) (recur (inc idx)
+                                                       (conj cols current-col)
+                                                       (repeat (count current-col) "")
+                                                       lines)
+         :default (recur (inc idx)
+                         cols (map #(str %1 (nth %2 idx)) current-col lines)
+                         lines))))
+
+(defn cephalopod-mangle [aseq]
+  (loop [strings []
+         i (dec (count (first aseq)))]
+    (if (= -1 i)
+      (map parse-long strings)
+      (recur (conj strings (str/trim (apply str (map #(.charAt % i) aseq))))
+             (dec i)))))
+
+(defn cephalopod-solve [[operator operands]]
+    (apply (resolve operator) (cephalopod-mangle operands)))

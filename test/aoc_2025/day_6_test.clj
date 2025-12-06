@@ -25,4 +25,4 @@
 
 (def input-string (slurp "aoc-2025-inputs/day-6.txt"))
 (deftest part-1-test
-  (is (= 0 (reduce + (map solve (parse input-string))))))
+  (is (= 4076006202939 (reduce + (map solve (parse input-string))))))

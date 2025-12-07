@@ -47,3 +47,4 @@
 
 (deftest part-2-test
   (is (= 10733529153890 (count-timelines input-data))))
+

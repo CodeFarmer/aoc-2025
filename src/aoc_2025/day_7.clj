@@ -3,7 +3,6 @@
             [clojure.set :as s]
             [clojure.string :as str]))
 
-
 ;; return a pair containing the number of times the beam was split, and the set of current beams
 (defn extend-beam [beam-set line]
   (if (empty? beam-set) ;; assume the first lime always contains the start
@@ -29,11 +28,10 @@
   (memoize
    (fn [i lines]
      (if (empty? lines) 1
-       (let [line (first lines)]
-         (if (= \^ (nth line i))
-           (+ (-count-timelines (dec i) (rest lines))
-              (-count-timelines (inc i) (rest lines)))
-           (-count-timelines i (rest lines))))))))
+       (if (= \^ (nth (first lines) i))
+         (+ (-count-timelines (dec i) (rest lines))
+            (-count-timelines (inc i) (rest lines)))
+         (-count-timelines i (rest lines)))))))
 
 (defn count-timelines [lines]
   (-count-timelines (str/index-of (first lines) \S) (rest lines)))

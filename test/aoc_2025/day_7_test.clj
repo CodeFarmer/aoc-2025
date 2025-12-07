@@ -38,6 +38,12 @@
   (str/split (slurp "aoc-2025-inputs/day-7.txt") #"\n"))
 
 (deftest part-1-test
-  (is (= 0 (count-splits input-data))))
+  (is (= 1533 (count-splits input-data))))
 
 ;; part 2
+
+(deftest timeline-counting-test
+  (is (= 40 (count-timelines sample-data))))
+
+(deftest part-2-test
+  (is (= 10733529153890 (count-timelines input-data))))

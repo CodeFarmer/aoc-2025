@@ -23,3 +23,18 @@
            [0 #{}]
            lines)))
 
+;; part 2
+
+(def -count-timelines
+  (memoize
+   (fn [i lines]
+     (if (empty? lines) 1
+       (let [line (first lines)]
+         (if (= \^ (nth line i))
+           (+ (-count-timelines (dec i) (rest lines))
+              (-count-timelines (inc i) (rest lines)))
+           (-count-timelines i (rest lines))))))))
+
+(defn count-timelines
+  ([lines]
+   (-count-timelines (str/index-of (first lines) \S) (rest lines))))

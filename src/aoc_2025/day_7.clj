@@ -35,6 +35,5 @@
               (-count-timelines (inc i) (rest lines)))
            (-count-timelines i (rest lines))))))))
 
-(defn count-timelines
-  ([lines]
-   (-count-timelines (str/index-of (first lines) \S) (rest lines))))
+(defn count-timelines [lines]
+  (-count-timelines (str/index-of (first lines) \S) (rest lines)))

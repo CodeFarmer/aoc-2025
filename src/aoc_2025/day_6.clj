@@ -16,27 +16,7 @@
 (defn solve [[operator operands]]
   (apply (resolve operator) operands))
 
-(comment 
-  ;; pad a sequence of numbers
-  (defn right-pad [aseq]
-    (let [l (count (str (reduce max aseq)))]
-      (map (fn [i]
-             (let [s (str i)]
-               (str s (apply str (repeat (- l (count s)) \space)))))
-           aseq)))
-
-  (defn cephalopod-mangle [aseq]
-    (let [padded (right-pad aseq)]
-      (loop [strings []
-             i (dec (count (first padded)))]
-        (if (= -1 i)
-          (map parse-long strings)
-          (recur (conj strings (str/trim (apply str (map #(.charAt % i) padded))))
-                 (dec i))))))
-
-  (defn cephalopod-solve [[operator operands]]
-    (apply (resolve operator) (cephalopod-mangle operands))))
-
+;; part 2
 
 (defn parse-columns
   ([astr]

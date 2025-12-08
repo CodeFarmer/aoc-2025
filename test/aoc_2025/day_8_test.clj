@@ -48,7 +48,17 @@
   (is (= 40 (bigness (make-circuits 10 sample-pairs)))))
 
 (def input-points (parse (slurp "aoc-2025-inputs/day-8.txt")))
+;; this part is most of the runtime, consider doing something else
 (def input-pairs (make-pairs input-points))
 
 (deftest part-1-test
   (is (= 171503 (bigness (make-circuits 1000 input-pairs)))))
+
+;; part 2
+
+(deftest one-big-circuit-test
+  (is (= [[216 146 977] [117 168 530]]
+         (one-big-circuit sample-points sample-pairs))))
+
+(deftest part-2-test
+  (is (= 9069509600 (apply * (map first (one-big-circuit input-points input-pairs))))))

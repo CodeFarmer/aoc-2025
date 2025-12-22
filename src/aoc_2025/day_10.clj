@@ -37,7 +37,6 @@
 (defn toggle [lights button]
   (bit-xor lights button))
 
-;; this stlil takes a minute to run on my laptop
 (defn minimum-presses
   ([target buttons _]
    (let [x (minimum-presses (conj clojure.lang.PersistentQueue/EMPTY
@@ -56,7 +55,37 @@
            (recur (if (seen-states state) (pop q)
                       (into (pop q)
                             (map (fn [b] [(inc depth) (toggle state b)])
-                                 buttons)))
+                                   buttons)))
                   (conj seen-states state)
                   target
                   buttons))))))
+
+(defn jolt-button [joltages button]
+  (reduce (fn [js i] (update-in js [i] inc)) joltages button))
+
+(defn -minimum-presses-joltage
+  ([q seen-states target-joltages buttons]
+   (if (empty? q)
+     nil
+     (let [[depth state] (peek q)]
+       (println "DEBUG: " depth state)
+       (if (= target-joltages state) depth
+           (recur (if (or (seen-states state)
+                          (some true? (map > state target-joltages)))
+                    (pop q)
+                    (into (pop q)
+                          (map (fn [b] [(inc depth) (jolt-button state b)])
+                               buttons)))
+                  (conj seen-states state)
+                  target-joltages
+                  buttons))))))
+
+(defn minimum-presses-joltage
+  ([_ buttons joltages]
+   (let [j (-minimum-presses-joltage (conj clojure.lang.PersistentQueue/EMPTY
+                                           [0 (mapv (fn [_] 0) joltages)])
+                                     #{}
+                                     joltages
+                                     buttons)]
+     (println "DEBUG:" j "<-" buttons joltages)
+     j)))

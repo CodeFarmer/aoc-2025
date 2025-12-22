@@ -28,3 +28,16 @@
 
 (deftest part-1-test
     (is (= 441 (reduce + (map #(apply minimum-presses %) input-machines)))))
+
+;; part 2
+
+(deftest jolt-button-test
+  (is (= [0 1 0 1] (jolt-button [0 0 0 0] [1 3]))))
+
+(deftest presses-joltage-test
+  (let [machines (parse sample-data)]
+    (is (= 10 (apply minimum-presses-joltage (first machines))))))
+
+(comment "this takes forever even on the first line of input"
+  (deftest part-2-test
+    (is (= 0 (reduce + (map #(apply minimum-presses-joltage %) input-machines))))))

@@ -53,10 +53,10 @@
      nil
      (let [[depth state] (peek q)]
        (if (= target state) depth
-           (recur (into (pop q)
-                        (filter (complement seen-states)
-                                (map (fn [b] [(inc depth) (toggle state b)])
-                                     buttons)))
+           (recur (if (seen-states state) (pop q)
+                      (into (pop q)
+                            (map (fn [b] [(inc depth) (toggle state b)])
+                                 buttons)))
                   (conj seen-states state)
                   target
                   buttons))))))
